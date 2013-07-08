@@ -67,7 +67,7 @@ namespace Ext.Net.Utilities
                 return instance;
             }
 
-            oldValues.Each<string>(value => instance.Replace(value, newValue));
+            oldValues.Each<string>(value => instance = instance.Replace(value, newValue));
 
             return instance;
         }

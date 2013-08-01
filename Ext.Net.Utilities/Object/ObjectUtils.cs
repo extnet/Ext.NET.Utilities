@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
+using System.Web.UI.WebControls;
 
 namespace Ext.Net.Utilities
 {
@@ -133,6 +134,11 @@ namespace Ext.Net.Utilities
 
                             if (toProperty.CanWrite)
                             {
+                                if (toPropertyType == typeof(Unit) && fromValue is int)
+                                {
+                                    fromValue = Unit.Pixel((int)fromValue);
+                                }
+
                                 toProperty.SetValue(to, fromValue, null);
                             }
                             else if (toProperty.PropertyType.GetInterface("IList") != null)

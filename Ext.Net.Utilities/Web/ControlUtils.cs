@@ -214,8 +214,6 @@ namespace Ext.Net.Utilities
 
             }
 
-            //Control root = (seed is INamingContainer) ? seed : seed.NamingContainer;
-
             foreach (Control control in seed.Controls)
             {
                 if (ControlUtils.HasControls(control))
@@ -232,6 +230,18 @@ namespace Ext.Net.Utilities
             return found;
         }
 
+        public static T FindChildControl<T>(Control seed, string id) where T : Control
+        {
+            Control c = ControlUtils.FindChildControl(seed, id);
+
+            if (c != null && !ReflectionUtils.IsTypeOf(c, typeof(T)))
+            {
+                throw new InvalidCastException(string.Format("The Control ID ('{0}') was found, but it was not a type of {1}. The found Control was a type of {2}.", id, typeof(T).ToString(), c.GetType().ToString()));
+            }
+
+            return c as T;
+        }
+        
         public static Control FindChildControl(Control seed, string typeFullName, bool shallow)
         {
             if (seed == null || string.IsNullOrEmpty(typeFullName))
@@ -261,6 +271,26 @@ namespace Ext.Net.Utilities
             return found;
         }
 
+        public static T FindChildControl<T>(Control seed) where T : Control
+        {
+            return ControlUtils.FindChildControl(seed, typeof(T), false) as T;
+        }
+
+        public static T FindChildControl<T>(Control seed, bool shallow) where T : Control
+        {
+            return ControlUtils.FindChildControl(seed, typeof(T), shallow) as T;
+        }
+
+        public static Control FindChildControl(Control seed, Type type)
+        {
+            return FindChildControl(seed, type, false);
+        }
+
+        public static Control FindChildControl(Control seed, Type type, bool shallow)
+        {
+            return FindChildControl(seed, type.FullName, shallow);
+        }
+
 
         /*  FindControls
             -----------------------------------------------------------------------------------------------*/
@@ -271,6 +301,67 @@ namespace Ext.Net.Utilities
         }
 
         public static List<T> FindControls<T>(Control seed, bool shallow) where T : Control
+        {
+            if (seed == null)
+            {
+                return null;
+            }
+
+            seed = (seed is INamingContainer) ? seed : seed.NamingContainer;
+            List<T> foundControls = new List<T>();
+
+            foreach (Control control in seed.Controls)
+            {
+                if (ReflectionUtils.IsTypeOf(control, typeof(T), shallow))
+                {
+                    foundControls.Add(control as T);
+                }
+
+                if (ControlUtils.HasControls(control))
+                {
+                    foundControls.AddRange(ControlUtils.FindChildControls<T>(control, shallow));
+                }
+            }
+
+            return foundControls;
+        }
+
+        public static List<T> FindControls<T>(Control seed, string typeFullName, bool shallow) where T : Control
+        {
+            if (seed == null || string.IsNullOrEmpty(typeFullName))
+            {
+                return null;
+            }
+
+            seed = (seed is INamingContainer) ? seed : seed.NamingContainer;
+            List<T> foundControls = new List<T>();
+
+            foreach (Control control in seed.Controls)
+            {
+                if (ReflectionUtils.IsTypeOf(control, typeFullName, shallow))
+                {
+                    foundControls.Add(control as T);
+                }
+
+                if (ControlUtils.HasControls(control))
+                {
+                    foundControls.AddRange(ControlUtils.FindChildControls<T>(control, typeFullName, shallow));
+                }
+            }
+
+            return foundControls;
+        }
+
+
+        /*  FindChildControls
+            -----------------------------------------------------------------------------------------------*/
+
+        public static List<T> FindChildControls<T>(Control seed) where T : Control
+        {
+            return FindChildControls<T>(seed, false);
+        }
+
+        public static List<T> FindChildControls<T>(Control seed, bool shallow) where T : Control
         {
             if (seed == null)
             {
@@ -288,14 +379,14 @@ namespace Ext.Net.Utilities
 
                 if (ControlUtils.HasControls(control))
                 {
-                    foundControls.AddRange(ControlUtils.FindControls<T>(control, shallow));
+                    foundControls.AddRange(ControlUtils.FindChildControls<T>(control, shallow));
                 }
             }
 
             return foundControls;
         }
 
-        public static List<T> FindControls<T>(Control seed, string typeFullName, bool shallow) where T : Control
+        public static List<T> FindChildControls<T>(Control seed, string typeFullName, bool shallow) where T : Control
         {
             if (seed == null || string.IsNullOrEmpty(typeFullName))
             {
@@ -313,7 +404,7 @@ namespace Ext.Net.Utilities
 
                 if (ControlUtils.HasControls(control))
                 {
-                    foundControls.AddRange(ControlUtils.FindControls<T>(control, typeFullName, shallow));
+                    foundControls.AddRange(ControlUtils.FindChildControls<T>(control, typeFullName, shallow));
                 }
             }
 

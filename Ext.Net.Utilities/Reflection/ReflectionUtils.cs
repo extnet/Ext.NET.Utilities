@@ -1,8 +1,8 @@
 ﻿/*
- * @version   : 2.3.0
+ * @version   : 2.4.0
  * @author    : Ext.NET, Inc. http://www.ext.net/
- * @date      : 2013-10-04
- * @copyright : Copyright (c) 2008-2013, Ext.NET, Inc. (http://www.ext.net/). All rights reserved.
+ * @date      : 2013-12-17
+ * @copyright : Copyright (c) 2008-2014, Ext.NET, Inc. (http://www.ext.net/). All rights reserved.
  * @license   : See license.txt and http://www.ext.net/license/. 
  * @website   : http://www.ext.net/
  */
@@ -27,6 +27,7 @@ namespace Ext.Net.Utilities
         public static object GetDefaultValue(PropertyDescriptor property)
         {
             DefaultValueAttribute attr = property.Attributes[typeof(DefaultValueAttribute)] as DefaultValueAttribute;
+
             return attr != null ? attr.Value : null;
         }
 
@@ -38,6 +39,7 @@ namespace Ext.Net.Utilities
         public static object GetDefaultValue(PropertyInfo property)
         {
             object[] att = property.GetCustomAttributes(typeof(DefaultValueAttribute), false);
+
             return att.Length > 0 ? ((DefaultValueAttribute)att[0]).Value : null;
         }
 
@@ -101,6 +103,7 @@ namespace Ext.Net.Utilities
                         {
                             return true;
                         }
+
                         type = type.BaseType;
                         fullName = type.FullName;
                     }

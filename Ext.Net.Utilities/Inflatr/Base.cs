@@ -1,8 +1,8 @@
 ﻿/*
- * @version   : 2.3.0
+ * @version   : 2.4.0
  * @author    : Ext.NET, Inc. http://www.ext.net/
- * @date      : 2013-10-04
- * @copyright : Copyright (c) 2008-2013, Ext.NET, Inc. (http://www.ext.net/). All rights reserved.
+ * @date      : 2013-12-17
+ * @copyright : Copyright (c) 2008-2014, Ext.NET, Inc. (http://www.ext.net/). All rights reserved.
  * @license   : See license.txt and http://www.ext.net/license/. 
  * @website   : http://www.ext.net/
  */
@@ -99,6 +99,7 @@ namespace Ext.Net.Utilities.Inflatr
         protected StringBuilder Indent()
         {
             StringBuilder sb = new StringBuilder();
+
             for (int i = 0; i < this.options.Level; i++)
             {
                 sb.Append(this.options.Indent);
@@ -133,6 +134,7 @@ namespace Ext.Net.Utilities.Inflatr
             for (int i = this.index; i >= 0; i--)
             {
                 bool match = pattern.IsMatch(input, i);
+
                 if (match)
                 { 
                     return i; 
@@ -183,6 +185,7 @@ namespace Ext.Net.Utilities.Inflatr
         protected string Peek(string pat)
         {
             Match m = new Regex("^" + pat, RegexOptions.Multiline).Match(this.input, this.index);
+
             return m.Success ? m.Groups[0].Value : null;
         }
 
@@ -194,9 +197,11 @@ namespace Ext.Net.Utilities.Inflatr
         protected string Scan(string pat)
         {
             string m = this.Peek(pat);
+
             if (m.IsNotEmpty())
             {
                 this.index += m.Length;
+             
                 return m;
             }
 
@@ -210,6 +215,7 @@ namespace Ext.Net.Utilities.Inflatr
         protected bool NextChar()
         {
             this.Append(this.Scan("(\n|.)"));
+
             return true;
         }
 
@@ -222,6 +228,7 @@ namespace Ext.Net.Utilities.Inflatr
             if (this.Scan("\\s+").IsNotEmpty())
             {
                 this.Append(" ");
+
                 return true;
             }
 
@@ -240,8 +247,10 @@ namespace Ext.Net.Utilities.Inflatr
             int x = this.LastIndexOf(this.newLineRe1, this.r.ToString());
             int y = this.LastIndexOf(this.newLineRe2, this.r.ToString());
 
-            if ( x < 0 || y < 0 || x < y ) {
+            if ( x < 0 || y < 0 || x < y )
+            {
                 this.c = 0; 
+
                 return "\n" + this.Indent().ToString();      
             } 
             else 
@@ -262,7 +271,8 @@ namespace Ext.Net.Utilities.Inflatr
 
             if (m.Success)
             {
-                this.index += m.Groups[0].Length; 
+                this.index += m.Groups[0].Length;
+
                 return m.Groups[1].Value;
             }
 
@@ -288,9 +298,11 @@ namespace Ext.Net.Utilities.Inflatr
         protected string Between(string start, string finish)
         {
             string m = this.Scan(start);
+
             if (m.IsNotEmpty())
             {
                 m = this.ScanUntil(finish);
+
                 if (m.IsNotEmpty())
                 {
                     return m;

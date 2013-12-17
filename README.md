@@ -1,9 +1,8 @@
 ﻿Project      : Ext.NET.Utilties
-Version      : 2.2.1
-Last Updated : 2013-04-16
+Version      : 2.4.0
+Last Updated : 2013-12-17
 
-
-# Ext.NET.Utilities
+## DESCRIPTION
 
 A .NET Utility Class Library for [Ext.NET](http://www.ext.net/).
 
@@ -13,10 +12,20 @@ Install using [NuGet](http://nuget.org/packages/Ext.NET.Utilities).
 
 ## Release History
 
+**2013-12-17 (geoffreymcgill)**
+
+- Release v2.4.0
+- One breaking change was introduced. See /App_Readme/Ext.NET.Utilities/BREAKING_CHANGES.txt
+
+
+**2013-10-04 (geoffreymcgill)**
+
+- Release v2.3.0
+
+
 **2013-04-16 (geoffreymcgill)**
 
 - Release v2.2.1
-
 
 **2013-03-20 (geoffreymcgill)**
 

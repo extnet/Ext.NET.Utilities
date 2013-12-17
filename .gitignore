@@ -6,3 +6,4 @@ Ext.Net.Utilities/bin/
 *.dll
 *.user
 *.vsdoc
+*.DS_Store

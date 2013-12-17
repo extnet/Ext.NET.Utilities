@@ -2,7 +2,7 @@
 *                      2.4.0 BREAKING CHANGES                            *
 **************************************************************************
 
-Release Date     : ???
+Release Date     : 2013-12-17
 Current Version  : 2.4.0
 Previous Version : 2.3.0
 

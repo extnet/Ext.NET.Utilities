@@ -1,8 +1,8 @@
 ﻿/*
- * @version   : 2.3.0
+ * @version   : 2.4.0
  * @author    : Ext.NET, Inc. http://www.ext.net/
- * @date      : 2013-10-04
- * @copyright : Copyright (c) 2008-2013, Ext.NET, Inc. (http://www.ext.net/). All rights reserved.
+ * @date      : 2013-12-17
+ * @copyright : Copyright (c) 2008-2014, Ext.NET, Inc. (http://www.ext.net/). All rights reserved.
  * @license   : See license.txt and http://www.ext.net/license/. 
  * @website   : http://www.ext.net/
  */
@@ -154,9 +154,11 @@ namespace Ext.Net.Utilities
                                 // method Add can be shadowed 
                                 // shadowed method will not be called via IList reference therefore we have to find last shadowed method
                                 Type genericItemType = typeof(object);
+
                                 if (toPropertyType.IsGenericType)
                                 {
                                     Type[] type = toPropertyType.GetGenericArguments();
+
                                     if (type != null && type.Length == 1)
                                     {
                                         genericItemType = type[0];
@@ -181,6 +183,7 @@ namespace Ext.Net.Utilities
                                     if (m.Name == "Add")
                                     {
                                         ParameterInfo[] prms = m.GetParameters();
+
                                         if (prms != null && prms.Length == 1 && prms[0].ParameterType.IsAssignableFrom(genericItemType))
                                         {
                                             if (method == null || m.DeclaringType.IsSubclassOf(method.DeclaringType))

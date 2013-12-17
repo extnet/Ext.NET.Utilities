@@ -72,11 +72,13 @@
   <ItemGroup>
     <None Include="Properties\Ext.Net.Utilities.snk" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Build\NuGet\Ext.NET.Utilities.LICENSE.txt" />
-    <Content Include="Build\NuGet\Ext.NET.Utilities.README.txt" />
-    <Content Include="README.txt" />
+    <Folder Include="Build\NuGet\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Readme\Ext.NET.Utilities\BREAKING_CHANGES.txt" />
+    <Content Include="App_Readme\Ext.NET.Utilities\LICENSE.txt" />
+    <Content Include="App_Readme\Ext.NET.Utilities\README.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

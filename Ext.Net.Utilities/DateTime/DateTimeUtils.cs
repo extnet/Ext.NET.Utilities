@@ -1,8 +1,8 @@
 ﻿/*
- * @version   : 2.3.0
+ * @version   : 2.4.0
  * @author    : Ext.NET, Inc. http://www.ext.net/
- * @date      : 2013-10-04
- * @copyright : Copyright (c) 2008-2013, Ext.NET, Inc. (http://www.ext.net/). All rights reserved.
+ * @date      : 2013-12-17
+ * @copyright : Copyright (c) 2008-2014, Ext.NET, Inc. (http://www.ext.net/). All rights reserved.
  * @license   : See license.txt and http://www.ext.net/license/. 
  * @website   : http://www.ext.net/
  */
@@ -15,7 +15,7 @@ using System.Web;
 
 namespace Ext.Net.Utilities
 {
-    /// <summary>ssssssssssssssssssssssssssss
+    /// <summary>
     /// 
     /// </summary>
     public static class DateTimeUtils

@@ -1,8 +1,8 @@
 ﻿/*
- * @version   : 2.3.0
+ * @version   : 2.4.0
  * @author    : Ext.NET, Inc. http://www.ext.net/
- * @date      : 2013-10-04
- * @copyright : Copyright (c) 2008-2013, Ext.NET, Inc. (http://www.ext.net/). All rights reserved.
+ * @date      : 2013-12-17
+ * @copyright : Copyright (c) 2008-2014, Ext.NET, Inc. (http://www.ext.net/). All rights reserved.
  * @license   : See license.txt and http://www.ext.net/license/. 
  * @website   : http://www.ext.net/
  */
@@ -33,13 +33,15 @@ namespace Ext.Net.Utilities.Inflatr
         /// <returns></returns>
         public override string Inflate(string input)
         {
-            this.input = input; 
+            this.input = input;
+
             while ( this.index < this.input.Length ) 
             {
               bool r = this.Comment() || this.String() || this.Regex() || this.Operator() || 
               this.Keyword() ||this.OpenBlock() || this.CloseBlock() || this.Comma() || 
               this.Parens() || this.Eos() || this.Eol() || this.NextChar();
             }
+
             return new Regex("\\s*$").Replace(this.r.ToString(), "");
         }
 
@@ -50,17 +52,21 @@ namespace Ext.Net.Utilities.Inflatr
         protected virtual bool Comment()
         {
             string m = this.Between("//", "\n");
+
             if (m.IsNotEmpty())
             {
                 this.Append("//", m, this.NewLine());
+
                 return false;
             }
             else
             {
                 m = this.Between(this.Escape("/*"), this.Escape("*/"));
+
                 if (m.IsNotEmpty())
                 {
                     this.Append("/*", m, "*/");
+
                     return true;
                 }
             }
@@ -75,17 +81,21 @@ namespace Ext.Net.Utilities.Inflatr
         protected virtual bool String()
         {
             string m = this.Between("'");
+
             if (m.IsNotEmpty())
             {
                 this.Append("'" + m + "'");
+
                 return true;
             }
             else
             {
                 m = this.Between("\"");
+
                 if (m.IsNotEmpty())
                 {
                     this.Append("\"" + m + "\"");
+
                     return true;
                 }
             }
@@ -105,9 +115,11 @@ namespace Ext.Net.Utilities.Inflatr
             if (!this.After(this.afterPatternRegex, this.afterStartRegex))
             {
                 string m = this.Between("/");
+
                 if (m.IsNotEmpty())
                 {
                     this.Append("/"+m+"/");
+
                     return true;
                 }
             }
@@ -122,9 +134,11 @@ namespace Ext.Net.Utilities.Inflatr
         protected virtual bool Operator()
         {
             string m = this.Scan(Javascript.OPERATORS);
+
             if (m.IsNotEmpty())
             {
                 this.Append(" " + m + " ");
+
                 return true;
             }
 
@@ -150,6 +164,7 @@ namespace Ext.Net.Utilities.Inflatr
             {
                 this.Options.Level += 1; 
                 this.Append(" {", this.NewLine() );
+
                 return true;
             }
 
@@ -166,6 +181,7 @@ namespace Ext.Net.Utilities.Inflatr
             {
                 this.Options.Level -= 1; 
                 this.Append( this.NewLine(), "}" );
+
                 if (this.Peek("[;,\\}]").IsNotEmpty()) 
                 { 
                     this.Append( this.NewLine() ); 
@@ -188,9 +204,12 @@ namespace Ext.Net.Utilities.Inflatr
                 if (this.Peek("(?!\\{\\})*;").IsNotEmpty() || (this.c < this.Options.Wrap))
                 {
                     this.Append(", ");
-                } else {
+                } 
+                else 
+                {
                     this.Append(",", this.NewLine() );
                 }
+
                 return true;
             }
 
@@ -206,16 +225,19 @@ namespace Ext.Net.Utilities.Inflatr
             if (this.Scan("\\(\\s*\\)").IsNotEmpty())
             {
                 this.Append("()");
+
                 return true;
             }
             else if(this.Scan("\\(").IsNotEmpty())
             {
                 this.Append(" ( ");
+
                 return true;
             }
             else if (this.Scan("\\)").IsNotEmpty())
             {
                 this.Append(" ) ");
+
                 return true;
             }
 
@@ -231,10 +253,12 @@ namespace Ext.Net.Utilities.Inflatr
             if (this.Scan(";").IsNotEmpty())
             {
                 this.Append(";");
+
                 if (this.Peek("\\s*\\}").IsNotEmpty())
                 {
                     this.Append(this.NewLine());
                 }
+
                 return true;
             }
 

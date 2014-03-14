@@ -7,3 +7,7 @@ Ext.Net.Utilities/bin/
 *.user
 *.vsdoc
 *.DS_Store
+
+/Ext.Net.Utilities/DateTime/.DS_Store
+
+/Ext.Net.Utilities/Object/.DS_Store

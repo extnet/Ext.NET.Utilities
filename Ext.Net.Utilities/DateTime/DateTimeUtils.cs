@@ -66,7 +66,7 @@ namespace Ext.Net.Utilities
             string temp = "";
             Match m = Regex.Match(format, @"(%|\\)?.|%%", RegexOptions.IgnoreCase);
 
-            while(m.Success)
+            while (m.Success)
             {
                 temp = m.Value;
 
@@ -75,7 +75,7 @@ namespace Ext.Net.Utilities
                     final.Append(temp.Replace(@"\", "").Replace("%%", "%"));
                 }
 
-                switch(temp)
+                switch (temp)
                 {
                     case "d":
                         final.Append("dd");
@@ -172,6 +172,18 @@ namespace Ext.Net.Utilities
                     break;
                 case "D":
                     format = culture.DateTimeFormat.LongDatePattern;
+                    break;
+                case "f":
+                    format = culture.DateTimeFormat.LongDatePattern + " " + culture.DateTimeFormat.ShortTimePattern;
+                    break;
+                case "F":
+                    format = culture.DateTimeFormat.FullDateTimePattern;
+                    break;
+                case "g":
+                    format = culture.DateTimeFormat.ShortDatePattern + " " + culture.DateTimeFormat.ShortTimePattern;
+                    break;
+                case "G":
+                    format = culture.DateTimeFormat.ShortDatePattern + " " + culture.DateTimeFormat.LongTimePattern;
                     break;
                 case "t":
                     format = culture.DateTimeFormat.ShortTimePattern;

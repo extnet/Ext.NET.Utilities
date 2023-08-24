@@ -60,10 +60,7 @@ namespace Ext.Net.Utilities
                 {
                     if (c < ' ')
                     {
-                        //t = "000" + Integer.toHexString(c);
-                        string tmp = new string(c, 1);
-                        t = "000" + int.Parse(tmp, System.Globalization.NumberStyles.HexNumber);
-                        sb.Append("\\u" + t.Substring(t.Length - 4));
+                        sb.Append("\\u" + ((int) c).ToString("x4", CultureInfo.InvariantCulture));
                     }
                     else
                     {
